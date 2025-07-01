@@ -22,7 +22,7 @@ Phantom-Data: Towards a General Subject-Consistent Video Generation Dataset -->
 
 ## ⭐ Citation
 
-If Phantom-Data is helpful, please help to ⭐ the repo.
+If ReasonBrain is helpful, please help to ⭐ the repo.
 
 If you find this project useful for your research, please consider citing our [paper](https://arxiv.org/abs/2506.18851).
 
