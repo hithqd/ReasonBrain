@@ -8,7 +8,7 @@
 </div>
 
 > [**Reasoning to Edit: Hypothetical Instruction-Based Image Editing with Visual Reasoning**](https://arxiv.org/abs/2502.11079)<br>
-> [Qingdong He](https://scholar.google.com/citations?user=gUJWww0AAAAJ&hl=zh-CN)<sup> * </sup>, [Xueqin Chen](https://scholar.google.com/citations?user=6F-iHFsAAAAJ&hl=zh-CN)<sup> * </sup>, [Chaoyi Wang](https://orcid.org/0000-0003-0164-1953), [Yanjie Pan](https://github.com/chfyfr), [Xiaobin Hu](https://scholar.google.com/citations?user=3lMuodUAAAAJ&hl=th), [Zhenye Gan](https://scholar.google.com/citations?user=fa4NkScAAAAJ), [Yabiao Wang](https://scholar.google.com/citations?user=xiK4nFUAAAAJ&hl=zh-CN), [Chengjie Wang](https://scholar.google.com/citations?user=fqte5H4AAAAJ&hl=zh-CN), [Xiangtai Li](https://scholar.google.com/citations?user=FL3ReD0AAAAJ&hl=zh-CN), [Jiangning Zhang](https://scholar.google.com/citations?user=9rWWCgUAAAAJ)
+> [Qingdong He](https://scholar.google.com/citations?user=gUJWww0AAAAJ&hl=zh-CN)<sup> * </sup>, [Xueqin Chen](https://scholar.google.com/citations?user=6F-iHFsAAAAJ&hl=zh-CN)<sup> * </sup>, [Chaoyi Wang](https://orcid.org/0000-0003-0164-1953), [Yanjie Pan](https://github.com/chfyfr), [Xiaobin Hu](https://scholar.google.com/citations?user=3lMuodUAAAAJ&hl=th), [Zhenye Gan](https://scholar.google.com/citations?user=fa4NkScAAAAJ), [Yabiao Wang](https://scholar.google.com/citations?user=xiK4nFUAAAAJ&hl=zh-CN), [Chengjie Wang](https://scholar.google.com/citations?user=fqte5H4AAAAJ&hl=zh-CN), [Xiangtai Li](https://scholar.google.com/citations?user=FL3ReD0AAAAJ&hl=zh-CN), [Jiangning Zhang](https://scholar.google.com.hk/citations?user=2hA4X9wAAAAJ&hl=zh-CN)
 > <br><sup> * </sup>Equal contribution
 > <br>Intelligent Creation Lab, ByteDance<br>
 
