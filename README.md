@@ -37,4 +37,4 @@ If you find this project useful for your research, please consider citing our [p
 ```
 
 ## 📧 Contact
-If you have any comments or questions regarding this open-source project, please open a new issue or contact [Zhuowei Chen](chenzw01@mail.ustc.edu.cn).
+If you have any comments or questions regarding this open-source project, please open a new issue or contact [Qingdong He](yingcaihe@tencent.com).
