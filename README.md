@@ -8,7 +8,7 @@
 </div>
 
 > [**Reasoning to Edit: Hypothetical Instruction-Based Image Editing with Visual Reasoning**](https://arxiv.org/abs/2502.11079)<br>
-> [Qingdong He](https://scholar.google.com/citations?user=gUJWww0AAAAJ&hl=zh-CN)<sup> * </sup>, [Xueqin Chen](https://scholar.google.com/citations?user=6F-iHFsAAAAJ&hl=zh-CN)<sup> * </sup>, [Tianxiang Ma](https://tianxiangma.github.io/)<sup> * </sup>, [Lijie Liu](https://liulj13.github.io/)<sup> * </sup>, [Mingcong Liu](https://onion-liu.github.io), Yi Zhang, Gen Li, Xinghui Li, Siyu Zhou, [Qian He](https://scholar.google.com/citations?user=9rWWCgUAAAAJ), Xinglong Wu
+> [Qingdong He](https://scholar.google.com/citations?user=gUJWww0AAAAJ&hl=zh-CN)<sup> * </sup>, [Xueqin Chen](https://scholar.google.com/citations?user=6F-iHFsAAAAJ&hl=zh-CN)<sup> * </sup>, [Chaoyi Wang](https://orcid.org/0000-0003-0164-1953)<sup> * </sup>, [Lijie Liu](https://liulj13.github.io/)<sup> * </sup>, [Mingcong Liu](https://onion-liu.github.io), Yi Zhang, Gen Li, Xinghui Li, Siyu Zhou, [Qian He](https://scholar.google.com/citations?user=9rWWCgUAAAAJ), Xinglong Wu
 > <br><sup> * </sup>Equal contribution,<sup> &dagger; </sup>Project lead
 > <br>Intelligent Creation Lab, ByteDance<br>
 
