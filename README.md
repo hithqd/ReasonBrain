@@ -3,7 +3,7 @@
 
 <div align="center">
   
-[![arXiv](https://img.shields.io/badge/arXiv%20paper-2502.11079-b31b1b.svg)](https://arxiv.org/abs/2506.18851)&nbsp;
+[![arXiv](https://img.shields.io/badge/arXiv%20paper-2502.11079-b31b1b.svg)](https://arxiv.org/abs/2507.01908)&nbsp;
 [![project page](https://img.shields.io/badge/Project_page-More_visualizations-green)](https://)&nbsp;
 </div>
 
@@ -24,7 +24,7 @@ Phantom-Data: Towards a General Subject-Consistent Video Generation Dataset -->
 
 If ReasonBrain is helpful, please help to ⭐ the repo.
 
-If you find this project useful for your research, please consider citing our [paper](https://arxiv.org/abs/2506.18851).
+If you find this project useful for your research, please consider citing our [paper](https://arxiv.org/abs/2507.01908).
 
 ### BibTeX
 ```bibtex
