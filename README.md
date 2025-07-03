@@ -30,8 +30,8 @@ If you find this project useful for your research, please consider citing our [p
 ```bibtex
 @article{he2025reasoning,
       title={Reasoning to Edit: Hypothetical Instruction-Based Image Editing with Visual Reasoning},
-      author={He, qingdong and Chen, Xueqin and Wang, Chaoyi and Liu, Lijie and Liu, Mingcong and Zhang, Yi and Li, Gen and Li, Xinghui and Zhou, Siyu and He, Qian and Wu, Xinglong},
-      journal={arXiv preprint arXiv:2506.18851},
+      author={He, qingdong and Chen, Xueqin and Wang, Chaoyi and Pan, Yanjie and Hu, Xiaobin and Gan, Zhenye and Wang, Yabiao and Wang, Chengjie and Li, Xiangtai and Zhang, Jiangning},
+      journal={arXiv preprint arXiv:2507.01908},
       year={2025}
     }
 ```
