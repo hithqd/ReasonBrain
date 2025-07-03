@@ -28,9 +28,9 @@ If you find this project useful for your research, please consider citing our [p
 
 ### BibTeX
 ```bibtex
-@article{chen2025phantom-data,
-      title={Phantom-Data: Towards a General Subject-Consistent Video Generation Dataset},
-      author={Chen, Zhuowei and Li, Bingchuan and Ma, Tianxiang and Liu, Lijie and Liu, Mingcong and Zhang, Yi and Li, Gen and Li, Xinghui and Zhou, Siyu and He, Qian and Wu, Xinglong},
+@article{he2025reasoning,
+      title={Reasoning to Edit: Hypothetical Instruction-Based Image Editing with Visual Reasoning},
+      author={He, qingdong and Chen, Xueqin and Wang, Chaoyi and Liu, Lijie and Liu, Mingcong and Zhang, Yi and Li, Gen and Li, Xinghui and Zhou, Siyu and He, Qian and Wu, Xinglong},
       journal={arXiv preprint arXiv:2506.18851},
       year={2025}
     }
