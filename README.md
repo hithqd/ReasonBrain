@@ -16,7 +16,7 @@
 <!-- # Phantom-Data
 Phantom-Data: Towards a General Subject-Consistent Video Generation Dataset -->
 ## 📑 Todo List
-- [ ] We will release the code, model and dataset, on Huggingface before September 2025.
+- [ ] We will release the code, model and dataset on Huggingface before September 2025.
 
 
 
