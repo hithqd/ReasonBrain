@@ -31,9 +31,9 @@ It also provides utilities to (re)build **Reason50K**, the 51K-sample dataset co
 
 ## 🚩 **Updates**
 
-- ✅ **[2026-05-01]** ReasonBrainwas accepted by **ICML 2026**.
+- ✅ **[2026-05-01]** ReasonBrain was accepted by **ICML 2026**.
 
-## 2. Installation
+## 🛠️ Installation
 
 We recommend Python 3.10 + CUDA 12.1 + a recent PyTorch.
 
