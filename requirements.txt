@@ -1,0 +1,46 @@
+# --- Core deep-learning stack ---
+# Install torch/torchvision from the official wheels with the right CUDA build;
+# the versions below have been validated against PyTorch 2.3.x.
+torch>=2.3.0
+torchvision>=0.18.0
+
+# --- HuggingFace ecosystem ---
+transformers>=4.43.0
+accelerate>=0.31.0
+diffusers>=0.30.0
+peft>=0.11.0
+safetensors>=0.4.3
+huggingface_hub>=0.24.0
+sentencepiece>=0.2.0
+tokenizers>=0.19.0
+
+# --- Vision / segmentation ---
+# `segment-anything` ships the SAM ViT-H model used by FRCE.
+segment-anything @ git+https://github.com/facebookresearch/segment-anything.git
+einops>=0.7.0
+opencv-python-headless>=4.9.0
+Pillow>=10.0.0
+timm>=0.9.16
+
+# --- Data construction (Reason50K builder) ---
+openai>=1.30.0
+spacy>=3.7.0
+lpips>=0.1.4
+clip-by-openai @ git+https://github.com/openai/CLIP.git
+
+# --- Utilities ---
+omegaconf>=2.3.0
+hydra-core>=1.3.2
+tqdm>=4.66.0
+rich>=13.7.0
+wandb>=0.17.0
+numpy>=1.26.0
+scipy>=1.11.0
+pandas>=2.2.0
+pyarrow>=15.0.0
+ftfy>=6.2.0
+regex>=2024.5.10
+
+# --- Optional but useful ---
+matplotlib>=3.8.0
+scikit-image>=0.22.0
