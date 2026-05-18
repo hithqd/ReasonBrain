@@ -1,0 +1,284 @@
+# ReasonBrain: Reasoning to Edit
+
+A reproduction implementation of the ICML 2026 paper:
+
+> **Reasoning to Edit: Hypothetical Instruction-Based Image Editing with Visual Reasoning**
+> Qingdong He, Xueqin Chen, Chaoyi Wang, Yanjie Pan, Xiaobin Hu, Zhenye Gan, Yabiao Wang, Chengjie Wang, Xiangtai Li, Jiangning Zhang
+> arXiv: [2507.01908](https://arxiv.org/abs/2507.01908)
+
+This repository provides a clean, modular PyTorch implementation of **ReasonBrain**, a framework that performs **hypothetical instruction-based image editing** by combining:
+
+- **LLaVA-v1.1-7B** as the Multimodal LLM (LoRA fine-tuned).
+- **FLUX.1-dev** as the diffusion backbone.
+- **FRCE** (Fine-grained Reasoning Cue Extraction): dual-branch (Patch + SAM segmentation) visual cues plus ID-Controller for textual cues.
+- **CME** (Cross-Modal Enhancer): vision-/text-oriented mixed cross-attention to recover details lost in the MLLM bottleneck.
+- **QFormer**: 6-layer, 77 query tokens, aligns MLLM hidden states to the diffusion conditioning space.
+
+It also provides utilities to (re)build **Reason50K**, the 51K-sample dataset covering Physical / Temporal / Causal / Story reasoning.
+
+---
+
+## 1. Repository Layout
+
+```
+ReasonBrain/
+├── README.md
+├── requirements.txt
+├── setup.py
+├── configs/
+│   ├── default.yaml              # Main training / inference config
+│   └── data.yaml                 # Reason50K data construction config
+├── reasonbrain/
+│   ├── __init__.py
+│   ├── models/
+│   │   ├── __init__.py
+│   │   ├── frce.py               # Fine-grained Reasoning Cue Extraction
+│   │   ├── cme.py                # Cross-Modal Enhancer
+│   │   ├── qformer.py            # MLLM -> Diffusion projector
+│   │   ├── id_controller.py      # Textual cue ID-Controller
+│   │   ├── mllm_wrapper.py       # LLaVA-v1.1-7B wrapper + LoRA + new tokens
+│   │   ├── flux_wrapper.py       # FLUX.1-dev wrapper for conditional editing
+│   │   └── reasonbrain.py        # Full ReasonBrain model
+│   ├── data/
+│   │   ├── __init__.py
+│   │   ├── reason50k.py          # PyTorch Dataset for Reason50K
+│   │   ├── transforms.py
+│   │   └── build_reason50k.py    # Pipeline that (re)constructs Reason50K
+│   ├── training/
+│   │   ├── __init__.py
+│   │   ├── losses.py             # MLLM + Diffusion losses
+│   │   ├── trainer.py            # Accelerate-based trainer
+│   │   └── optim.py
+│   ├── inference/
+│   │   ├── __init__.py
+│   │   └── pipeline.py           # End-to-end editing pipeline
+│   ├── evaluation/
+│   │   ├── __init__.py
+│   │   └── metrics.py            # CLIP-T, CLIP-I, DINO, LPIPS
+│   └── utils/
+│       ├── __init__.py
+│       ├── config.py
+│       ├── logging.py
+│       └── distributed.py
+├── scripts/
+│   ├── train.py
+│   ├── infer.py
+│   ├── evaluate.py
+│   └── build_dataset.py
+└── tests/
+    └── test_shapes.py
+```
+
+---
+
+## 2. Installation
+
+We recommend Python 3.10 + CUDA 12.1 + a recent PyTorch.
+
+```bash
+# 1. clone
+git clone <this-repo>
+cd ReasonBrain
+
+# 2. create env
+conda create -n reasonbrain python=3.10 -y
+conda activate reasonbrain
+
+# 3. PyTorch (adapt CUDA version to your driver)
+pip install torch==2.3.1 torchvision==0.18.1 --index-url https://download.pytorch.org/whl/cu121
+
+# 4. project deps
+pip install -r requirements.txt
+
+# 5. optional: register the package
+pip install -e .
+```
+
+### Pretrained Weights
+
+| Component            | Source / HuggingFace ID                                  |
+| -------------------- | -------------------------------------------------------- |
+| LLaVA-v1.1-7B        | `liuhaotian/LLaVA-7b-v1` (or compatible LLaVA-1.5 / 1.6) |
+| FLUX.1-dev           | `black-forest-labs/FLUX.1-dev`                           |
+| SAM (ViT-H)          | `facebook/sam-vit-huge`                                  |
+| CLIP ViT-L/14        | `openai/clip-vit-large-patch14`                          |
+
+By default these are auto-downloaded by Hugging Face on first use. Cache location can be set via `HF_HOME`.
+
+---
+
+## 3. Dataset: Reason50K
+
+The official release contains **51,039** `(source_image, hypothetical_instruction, target_image)` triples spanning four reasoning categories:
+
+| Category   | Example instruction                                       |
+| ---------- | --------------------------------------------------------- |
+| Physical   | "What happens to this ice cube left at room temperature?" |
+| Temporal   | "Show this scene 50 years from now."                      |
+| Causal     | "What if the dam in the picture broke?"                   |
+| Story      | "After the dragon attacks, what does the village look like?" |
+
+### 3.1 Expected on-disk format
+
+```
+data/reason50k/
+├── train.jsonl
+├── val.jsonl
+├── test.jsonl
+└── images/
+    ├── src/000000.png
+    └── tgt/000000.png
+```
+
+Each JSONL line:
+
+```json
+{
+  "id": "000000",
+  "category": "physical",
+  "src_image": "images/src/000000.png",
+  "tgt_image": "images/tgt/000000.png",
+  "instruction": "What if this glass was dropped onto the floor?",
+  "objects": ["glass", "floor"]
+}
+```
+
+### 3.2 Re-building Reason50K
+
+The construction pipeline follows §3 of the paper (reverse-generation: target → source). Given seed prompts:
+
+```bash
+python scripts/build_dataset.py \
+    --config configs/data.yaml \
+    --seeds data/seeds.jsonl \
+    --out data/reason50k
+```
+
+Steps performed automatically:
+
+1. GPT generates hypothetical instructions + target descriptions.
+2. spaCy extracts referenced entities (`objects`).
+3. A T2I diffusion model + IP-Adapter generates several candidate source images.
+4. GPT scoring + LPIPS/CLIP perceptual filters pick the best source.
+
+> Building the full 50K dataset requires OpenAI API credit & GPU time. The shipped sample (`data/sample/`) lets you smoke-test the full training/inference loop end-to-end.
+
+---
+
+## 4. Training
+
+Single-node multi-GPU (using 🤗 Accelerate):
+
+```bash
+accelerate config            # one-time setup
+accelerate launch scripts/train.py --config configs/default.yaml
+```
+
+Multi-node (paper setup: 16× H20) — fill in your hostfile / launcher and:
+
+```bash
+accelerate launch \
+    --num_processes 16 --num_machines 2 \
+    scripts/train.py --config configs/default.yaml
+```
+
+Key hyper-parameters (from the paper, exposed in `configs/default.yaml`):
+
+| Item                          | Value         |
+| ----------------------------- | ------------- |
+| Optimizer                     | AdamW         |
+| Learning rate                 | 1e-3          |
+| Weight decay                  | 1e-2          |
+| Batch size (global)           | 16            |
+| LoRA rank / alpha             | 8 / 16        |
+| Extra special tokens in MLLM  | 32 (`[IMG_*]`)|
+| QFormer layers / queries      | 6 / 77        |
+| MLLM                          | LLaVA-v1.1-7B |
+| Diffusion model               | FLUX.1-dev    |
+
+Checkpoints are written to `outputs/<run_name>/`.
+
+---
+
+## 5. Inference
+
+```bash
+python scripts/infer.py \
+    --config configs/default.yaml \
+    --ckpt outputs/reasonbrain/last \
+    --src_image examples/glass.png \
+    --instruction "What if this glass was dropped onto the floor?" \
+    --out edited.png
+```
+
+For Python usage:
+
+```python
+from reasonbrain.inference.pipeline import ReasonBrainPipeline
+
+pipe = ReasonBrainPipeline.from_pretrained("outputs/reasonbrain/last").to("cuda")
+edited = pipe("examples/ice_cube.png",
+              "What happens to this ice cube left at room temperature?")
+edited.save("edited.png")
+```
+
+---
+
+## 6. Evaluation
+
+```bash
+python scripts/evaluate.py \
+    --ckpt outputs/reasonbrain/last \
+    --test data/reason50k/test.jsonl \
+    --metrics clip_t clip_i dino lpips
+```
+
+Implemented metrics (`reasonbrain/evaluation/metrics.py`):
+
+- **CLIP-T**: text-image alignment between `target_caption` and the edited image.
+- **CLIP-I / DINO**: visual similarity between the edited image and the GT target.
+- **LPIPS**: perceptual distance.
+
+---
+
+## 7. Notes on Reproduction Faithfulness
+
+This repository is a **research-grade re-implementation**: it follows the paper's described
+architecture, losses and hyper-parameters but does **not** ship the official weights. A few
+clarifications:
+
+- **MLLM**: the paper says "LLaVA-v1.1-7B". The closest open-source release is
+  `liuhaotian/LLaVA-7b-v1` (LLaVA-1.5 also works with a one-line config change).
+- **FRCE Patch-extractor**: implemented as a lightweight ViT block on top of CLIP patch
+  features (MAE-style). The "object-region extractor" uses SAM masks + masked pooling.
+- **CME**: implemented as a 5-block mixed cross-attention stack as described.
+- **Loss `L = L_MLLM + L_DM`**: implemented in `reasonbrain/training/losses.py`. Both
+  losses can be enabled / disabled independently for ablations.
+- Some implementation details (e.g. exact patch-adapter dim, ID-Controller depth) are
+  inferred where the paper does not specify; defaults are chosen to match the reported
+  shapes.
+
+PRs and issues that bring the implementation closer to the official one are very welcome.
+
+---
+
+## 8. Citation
+
+```bibtex
+@inproceedings{he2026reasonbrain,
+  title     = {Reasoning to Edit: Hypothetical Instruction-Based Image Editing with Visual Reasoning},
+  author    = {He, Qingdong and Chen, Xueqin and Wang, Chaoyi and Pan, Yanjie and
+               Hu, Xiaobin and Gan, Zhenye and Wang, Yabiao and Wang, Chengjie and
+               Li, Xiangtai and Zhang, Jiangning},
+  booktitle = {ICML},
+  year      = {2026}
+}
+```
+
+---
+
+## 9. License
+
+Code in this repository is released under the Apache-2.0 license. Note that the
+underlying models (LLaVA, FLUX, SAM, CLIP) come with their own licenses; please respect
+them.
