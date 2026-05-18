@@ -60,7 +60,7 @@ pip install -e .
 
 | Component            | Source / HuggingFace ID                                  |
 | -------------------- | -------------------------------------------------------- |
-| LLaVA-v1.1-7B        | [`liuhaotian/llava-v1.5-7b`] ([liuhaotian/LLaVA-7b-v1](https://huggingface.co/liuhaotian/llava-v1.5-7b)) |
+| LLaVA-v1.1-7B        | [`liuhaotian/llava-v1.5-7b`](https://huggingface.co/liuhaotian/llava-v1.5-7b)) |
 | FLUX.1-dev           | `black-forest-labs/FLUX.1-dev`                           |
 | SAM (ViT-H)          | `facebook/sam-vit-huge`                                  |
 | CLIP ViT-L/14        | `openai/clip-vit-large-patch14`                          |
