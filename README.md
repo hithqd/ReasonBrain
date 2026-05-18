@@ -62,8 +62,8 @@ pip install -e .
 | -------------------- | -------------------------------------------------------- |
 | LLaVA-v1.1-7B        | [`liuhaotian/llava-v1.5-7b`](https://huggingface.co/liuhaotian/llava-v1.5-7b) |
 | FLUX.1-dev           | [`black-forest-labs/FLUX.1-dev`](https://huggingface.co/black-forest-labs/FLUX.1-dev)                           |
-| SAM (ViT-H)          | `facebook/sam-vit-huge`                                  |
-| CLIP ViT-L/14        | `openai/clip-vit-large-patch14`                          |
+| SAM (ViT-H)          | [`facebook/sam-vit-huge`](https://huggingface.co/facebook/sam-vit-huge)                                  |
+| CLIP ViT-L/14        | [`openai/clip-vit-large-patch14`](https://huggingface.co/openai/clip-vit-large-patch14)                          |
 
 By default these are auto-downloaded by Hugging Face on first use. Cache location can be set via `HF_HOME`.
 
