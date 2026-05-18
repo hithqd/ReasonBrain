@@ -29,61 +29,6 @@ This repository provides a clean, modular PyTorch implementation of **ReasonBrai
 
 It also provides utilities to (re)build **Reason50K**, the 51K-sample dataset covering Physical / Temporal / Causal / Story reasoning.
 
----
-
-## 1. Repository Layout
-
-```
-ReasonBrain/
-├── README.md
-├── requirements.txt
-├── setup.py
-├── configs/
-│   ├── default.yaml              # Main training / inference config
-│   └── data.yaml                 # Reason50K data construction config
-├── reasonbrain/
-│   ├── __init__.py
-│   ├── models/
-│   │   ├── __init__.py
-│   │   ├── frce.py               # Fine-grained Reasoning Cue Extraction
-│   │   ├── cme.py                # Cross-Modal Enhancer
-│   │   ├── qformer.py            # MLLM -> Diffusion projector
-│   │   ├── id_controller.py      # Textual cue ID-Controller
-│   │   ├── mllm_wrapper.py       # LLaVA-v1.1-7B wrapper + LoRA + new tokens
-│   │   ├── flux_wrapper.py       # FLUX.1-dev wrapper for conditional editing
-│   │   └── reasonbrain.py        # Full ReasonBrain model
-│   ├── data/
-│   │   ├── __init__.py
-│   │   ├── reason50k.py          # PyTorch Dataset for Reason50K
-│   │   ├── transforms.py
-│   │   └── build_reason50k.py    # Pipeline that (re)constructs Reason50K
-│   ├── training/
-│   │   ├── __init__.py
-│   │   ├── losses.py             # MLLM + Diffusion losses
-│   │   ├── trainer.py            # Accelerate-based trainer
-│   │   └── optim.py
-│   ├── inference/
-│   │   ├── __init__.py
-│   │   └── pipeline.py           # End-to-end editing pipeline
-│   ├── evaluation/
-│   │   ├── __init__.py
-│   │   └── metrics.py            # CLIP-T, CLIP-I, DINO, LPIPS
-│   └── utils/
-│       ├── __init__.py
-│       ├── config.py
-│       ├── logging.py
-│       └── distributed.py
-├── scripts/
-│   ├── train.py
-│   ├── infer.py
-│   ├── evaluate.py
-│   └── build_dataset.py
-└── tests/
-    └── test_shapes.py
-```
-
----
-
 ## 2. Installation
 
 We recommend Python 3.10 + CUDA 12.1 + a recent PyTorch.
