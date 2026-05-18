@@ -39,7 +39,7 @@ We recommend Python 3.10 + CUDA 12.1 + a recent PyTorch.
 
 ```bash
 # 1. clone
-git clone [<this-repo>](https://github.com/hithqd/ReasonBrain.git)
+git clone https://github.com/hithqd/ReasonBrain.git
 cd ReasonBrain
 
 # 2. create env
