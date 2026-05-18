@@ -69,9 +69,9 @@ By default these are auto-downloaded by Hugging Face on first use. Cache locatio
 
 ---
 
-## 3. Dataset: Reason50K
+## 🎬 Dataset: Reason50K
 
-The official release contains **51,039** `(source_image, hypothetical_instruction, target_image)` triples spanning four reasoning categories:
+The `(source_image, hypothetical_instruction, target_image)` triples spanning four reasoning categories:
 
 | Category   | Example instruction                                       |
 | ---------- | --------------------------------------------------------- |
@@ -80,7 +80,7 @@ The official release contains **51,039** `(source_image, hypothetical_instructio
 | Causal     | "What if the dam in the picture broke?"                   |
 | Story      | "After the dragon attacks, what does the village look like?" |
 
-### 3.1 Expected on-disk format
+### 1 Expected on-disk format
 
 ```
 data/reason50k/
@@ -105,7 +105,7 @@ Each JSONL line:
 }
 ```
 
-### 3.2 Re-building Reason50K
+### 2 Re-building Reason50K
 
 The construction pipeline follows §3 of the paper (reverse-generation: target → source). Given seed prompts:
 
