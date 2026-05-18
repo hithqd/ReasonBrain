@@ -210,11 +210,13 @@ If you find this project useful for your research, please consider citing our [p
 
 ### BibTeX
 ```bibtex
-@article{he2025reasoning,
-  title={Reasoning to Edit: Hypothetical Instruction-Based Image Editing with Visual Reasoning},
-  author={He, Qingdong and Chen, Xueqin and Wang, Chaoyi and Pan, Yanjie and Hu, Xiaobin and Gan, Zhenye and Wang, Yabiao and Wang, Chengjie and Li, Xiangtai and Zhang, Jiangning},
-  journal={arXiv preprint arXiv:2507.01908},
-  year={2025}
+@inproceedings{he2026reasonbrain,
+  title     = {Reasoning to Edit: Hypothetical Instruction-Based Image Editing with Visual Reasoning},
+  author    = {He, Qingdong and Chen, Xueqin and Wang, Chaoyi and Pan, Yanjie and
+               Hu, Xiaobin and Gan, Zhenye and Wang, Yabiao and Wang, Chengjie and
+               Li, Xiangtai and Zhang, Jiangning},
+  booktitle = {ICML},
+  year      = {2026}
 }
 ```
 
@@ -222,7 +224,7 @@ If you find this project useful for your research, please consider citing our [p
 If you have any comments or questions regarding this open-source project, please open a new issue or contact [Qingdong He](heqingdong@alu.uestc.edu.cn).
 
 
-## 9. License
+## ⚖️ License
 
 Code in this repository is released under the Apache-2.0 license. Note that the
 underlying models (LLaVA, FLUX, SAM, CLIP) come with their own licenses; please respect
