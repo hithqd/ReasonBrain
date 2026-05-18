@@ -202,20 +202,25 @@ Implemented metrics (`reasonbrain/evaluation/metrics.py`):
 - **LPIPS**: perceptual distance.
 
 
-## 8. Citation
+## ⭐ Citation
 
+If ReasonBrain is helpful, please help to ⭐ the repo.
+
+If you find this project useful for your research, please consider citing our [paper](https://arxiv.org/abs/2507.01908).
+
+### BibTeX
 ```bibtex
-@inproceedings{he2026reasonbrain,
-  title     = {Reasoning to Edit: Hypothetical Instruction-Based Image Editing with Visual Reasoning},
-  author    = {He, Qingdong and Chen, Xueqin and Wang, Chaoyi and Pan, Yanjie and
-               Hu, Xiaobin and Gan, Zhenye and Wang, Yabiao and Wang, Chengjie and
-               Li, Xiangtai and Zhang, Jiangning},
-  booktitle = {ICML},
-  year      = {2026}
+@article{he2025reasoning,
+  title={Reasoning to Edit: Hypothetical Instruction-Based Image Editing with Visual Reasoning},
+  author={He, Qingdong and Chen, Xueqin and Wang, Chaoyi and Pan, Yanjie and Hu, Xiaobin and Gan, Zhenye and Wang, Yabiao and Wang, Chengjie and Li, Xiangtai and Zhang, Jiangning},
+  journal={arXiv preprint arXiv:2507.01908},
+  year={2025}
 }
 ```
 
----
+## 📧 Contact
+If you have any comments or questions regarding this open-source project, please open a new issue or contact [Qingdong He](heqingdong@alu.uestc.edu.cn).
+
 
 ## 9. License
 
