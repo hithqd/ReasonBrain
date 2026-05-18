@@ -1,0 +1,101 @@
+# =========================================================================
+# Default training / inference configuration for ReasonBrain.
+# Values follow Section 5 (Implementation Details) of the paper as closely
+# as possible. Anything not specified there is set to a sensible default.
+# =========================================================================
+
+run_name: reasonbrain
+seed: 42
+output_dir: outputs/reasonbrain
+
+# ---------------- Model ----------------
+model:
+  # Multimodal LLM (LLaVA-v1.1-7B is the paper's choice).
+  mllm:
+    pretrained: liuhaotian/LLaVA-7b-v1
+    # Number of new special image tokens "[IMG_i]" appended to the vocabulary.
+    num_image_tokens: 32
+    # Number of learnable query tokens (the paper denotes them Q with size r).
+    num_query_tokens: 32
+    lora:
+      r: 8
+      alpha: 16
+      dropout: 0.05
+      target_modules: ["q_proj", "v_proj", "k_proj", "o_proj"]
+
+  # Diffusion backbone (FLUX.1-dev, 12B params).
+  diffusion:
+    pretrained: black-forest-labs/FLUX.1-dev
+    # Enable to freeze the diffusion transformer and only train CME + LoRA.
+    freeze_transformer: false
+    # Image resolution for training / inference.
+    resolution: 512
+    # Number of inference denoising steps.
+    num_inference_steps: 28
+    guidance_scale: 3.5
+
+  # QFormer that maps the r learnable MLLM tokens to the diffusion space.
+  qformer:
+    num_layers: 6
+    num_queries: 77
+    hidden_dim: 768
+    num_heads: 12
+
+  # FRCE: fine-grained reasoning-cue extraction.
+  frce:
+    image_encoder: openai/clip-vit-large-patch14
+    text_encoder:  openai/clip-vit-large-patch14
+    sam_pretrained: facebook/sam-vit-huge
+    patch_dim: 1024            # CLIP-L hidden size
+    region_dim: 256            # SAM mask-decoder feature dim
+    out_dim: 1024
+    patch_layers: 4
+    region_layers: 2
+    max_objects: 16            # max # entity tokens kept from the instruction
+    id_controller_layers: 2
+
+  # CME: cross-modal enhancer (5 mixed cross-attention blocks per branch).
+  cme:
+    num_blocks: 5
+    hidden_dim: 1024
+    num_heads: 16
+    dropout: 0.0
+
+# ---------------- Data ----------------
+data:
+  root: data/reason50k
+  train_jsonl: train.jsonl
+  val_jsonl: val.jsonl
+  test_jsonl: test.jsonl
+  image_size: 512
+  num_workers: 8
+  pin_memory: true
+
+# ---------------- Optim / schedule ----------------
+optim:
+  lr: 1.0e-3
+  weight_decay: 1.0e-2
+  betas: [0.9, 0.999]
+  eps: 1.0e-8
+  warmup_steps: 1000
+  max_steps: 200000
+  grad_clip: 1.0
+  scheduler: cosine
+
+train:
+  batch_size: 16              # global batch size (paper)
+  gradient_accumulation_steps: 1
+  mixed_precision: bf16
+  log_every: 50
+  ckpt_every: 5000
+  eval_every: 5000
+  resume: null
+  loss_weights:
+    mllm: 1.0
+    dm: 1.0
+
+# ---------------- Inference defaults ----------------
+inference:
+  num_inference_steps: 28
+  guidance_scale: 3.5
+  seed: 0

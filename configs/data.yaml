@@ -1,0 +1,43 @@
+# Configuration for (re)building Reason50K following Section 3 of the paper.
+
+out_dir: data/reason50k
+splits:
+  train: 0.95
+  val: 0.025
+  test: 0.025
+
+# Reasoning categories and their relative sample counts (paper §3).
+categories:
+  physical: 0.40
+  temporal: 0.30
+  causal:   0.20
+  story:    0.10
+
+# GPT prompts used to generate instructions and target captions.
+gpt:
+  model: gpt-4o
+  temperature: 0.8
+  max_tokens: 512
+  system_prompt: |
+    You are an expert annotator constructing the Reason50K dataset.
+    Given a (category, scene description) pair, produce:
+      (1) a hypothetical instruction H that requires multi-step reasoning,
+      (2) a detailed target caption describing the resulting scene,
+      (3) a list of physically referenced entities.
+    Return strict JSON with keys: instruction, target_caption, objects.
+
+# Diffusion T2I model used to synthesize target / source candidates.
+t2i:
+  model: stabilityai/stable-diffusion-xl-base-1.0
+  ip_adapter: h94/IP-Adapter
+  num_candidates: 4
+  guidance_scale: 7.0
+  steps: 30
+
+# Filtering criteria for picking the best source candidate.
+filter:
+  clip_score_threshold: 0.22
+  lpips_min: 0.20
+  lpips_max: 0.55
+  gpt_score_weight: 0.6
+  clip_score_weight: 0.4
