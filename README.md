@@ -127,7 +127,7 @@ Steps performed automatically:
 
 ---
 
-## 4. Training
+## 🔥 Training
 
 Single-node multi-GPU (using 🤗 Accelerate):
 
@@ -162,7 +162,7 @@ Checkpoints are written to `outputs/<run_name>/`.
 
 ---
 
-## 5. Inference
+## 🎮 Inference
 
 ```bash
 python scripts/infer.py \
@@ -186,7 +186,7 @@ edited.save("edited.png")
 
 ---
 
-## 6. Evaluation
+## 📊 Evaluation
 
 ```bash
 python scripts/evaluate.py \
