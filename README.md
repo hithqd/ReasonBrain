@@ -29,6 +29,10 @@ This repository provides a clean, modular PyTorch implementation of **ReasonBrai
 
 It also provides utilities to (re)build **Reason50K**, the 51K-sample dataset covering Physical / Temporal / Causal / Story reasoning.
 
+## 🚩 **Updates**
+
+- ✅ **[2026-05-01]** ReasonBrainwas accepted by **ICML 2026**.
+
 ## 2. Installation
 
 We recommend Python 3.10 + CUDA 12.1 + a recent PyTorch.
