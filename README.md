@@ -201,28 +201,6 @@ Implemented metrics (`reasonbrain/evaluation/metrics.py`):
 - **CLIP-I / DINO**: visual similarity between the edited image and the GT target.
 - **LPIPS**: perceptual distance.
 
----
-
-## 7. Notes on Reproduction Faithfulness
-
-This repository is a **research-grade re-implementation**: it follows the paper's described
-architecture, losses and hyper-parameters but does **not** ship the official weights. A few
-clarifications:
-
-- **MLLM**: the paper says "LLaVA-v1.1-7B". The closest open-source release is
-  `liuhaotian/LLaVA-7b-v1` (LLaVA-1.5 also works with a one-line config change).
-- **FRCE Patch-extractor**: implemented as a lightweight ViT block on top of CLIP patch
-  features (MAE-style). The "object-region extractor" uses SAM masks + masked pooling.
-- **CME**: implemented as a 5-block mixed cross-attention stack as described.
-- **Loss `L = L_MLLM + L_DM`**: implemented in `reasonbrain/training/losses.py`. Both
-  losses can be enabled / disabled independently for ablations.
-- Some implementation details (e.g. exact patch-adapter dim, ID-Controller depth) are
-  inferred where the paper does not specify; defaults are chosen to match the reported
-  shapes.
-
-PRs and issues that bring the implementation closer to the official one are very welcome.
-
----
 
 ## 8. Citation
 
