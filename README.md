@@ -76,7 +76,7 @@ The `(source_image, hypothetical_instruction, target_image)` triples spanning fo
 | Category   | Example instruction                                       |
 | ---------- | --------------------------------------------------------- |
 | Physical   | "What happens to this ice cube left at room temperature?" |
-| Temporal   | "Show this scene 50 years from now."                      |
+| Temporal   | "What will happen after 50 years have passed?"                      |
 | Causal     | "What if the dam in the picture broke?"                   |
 | Story      | "After the dragon attacks, what does the village look like?" |
 
