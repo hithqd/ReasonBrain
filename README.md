@@ -80,7 +80,7 @@ The `(source_image, hypothetical_instruction, target_image)` triples spanning fo
 | Causal     | "What if the dam in the picture broke?"                   |
 | Story      | "After the dragon attacks, what does the village look like?" |
 
-### 1 Expected on-disk format
+### 1. Expected on-disk format
 
 ```
 data/reason50k/
@@ -105,7 +105,7 @@ Each JSONL line:
 }
 ```
 
-### 2 Re-building Reason50K
+### 2. Re-building Reason50K
 
 The construction pipeline follows §3 of the paper (reverse-generation: target → source). Given seed prompts:
 
